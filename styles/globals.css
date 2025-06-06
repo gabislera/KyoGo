@@ -91,4 +91,7 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .hide-default-close [data-state] > button[aria-label="Close"] {
+    display: none !important;
+  }
 }

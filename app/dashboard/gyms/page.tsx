@@ -126,7 +126,7 @@ export default function GymsPage() {
             <Button
               onClick={handleSearch}
               disabled={isLoading}
-              className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600"
+              className="bg-rose-500 hover:bg-rose-600"
             >
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
               <span className="ml-2">Search</span>
@@ -186,7 +186,7 @@ function GymCard({
   onCheckIn: () => void
 }) {
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden h-full flex flex-col justify-between">
       <CardContent className="p-6">
         <h3 className="text-lg font-bold mb-2">{gym.title}</h3>
         {gym.description && <p className="text-muted-foreground text-sm mb-4">{gym.description}</p>}

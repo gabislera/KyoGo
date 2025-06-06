@@ -216,7 +216,7 @@ export default function CreateGymPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full bg-rose-500 hover:bg-rose-600" disabled={isLoading}>
                 {isLoading ? "Creating gym..." : "Create Gym"}
               </Button>
             </form>
