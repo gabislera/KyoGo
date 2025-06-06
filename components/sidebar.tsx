@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/hooks/use-auth"
-import { LayoutDashboard, Dumbbell, CheckCircle, PlusCircle, LogOut, JapaneseYen, User } from "lucide-react"
+import { LayoutDashboard, Dumbbell, CheckCircle, PlusCircle, LogOut, JapaneseYen, User, EllipsisVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -55,13 +55,12 @@ export function Sidebar() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-card border-r border-border w-full md:w-64">
-      <div className="p-6 border-b border-red-500/20">
-        <div className="flex items-center space-x-2 mb-2">
+    <div className="h-[calc(100% - 65px)] flex flex-col bg-card border-r border-border w-full md:w-64">
+      <div className="p-4 border-b border-red-500/20">
+        <div className="flex items-center space-x-2">
           <JapaneseYen className="w-6 h-6 text-rose-500" />
           <h1 className="text-2xl font-bold">KyoGo</h1>
         </div>
-        <p className="text-muted-foreground text-sm">Fitness with Japanese spirit</p>
       </div>
       <div className="flex-1 px-3 py-2 space-y-1">
         {routes.map((route) => (
@@ -99,15 +98,25 @@ export function Sidebar() {
             </Button>
           ))}
       </div>
-      <div className="flex items-center gap-4 p-3 mt-auto border-t border-border">
+      <div className="border-t border-border p-2">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback>{user?.name ? getInitials(user.name) : "U"}</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="hover:bg-transparent w-full justify-start"
+              >
+                <Avatar className="h-8 w-8 rounded-lg grayscale">
+                  <AvatarFallback>{user?.name ? getInitials(user.name) : "U"}</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{user?.name}</span>
+                  <span className="text-muted-foreground truncate text-xs">
+                    {user?.email}
+                  </span>
+                </div>
+                <EllipsisVertical className="ml-auto size-4" />
+              </Button>
+            </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
