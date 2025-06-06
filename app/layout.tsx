@@ -8,9 +8,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Gym Management System",
-  description: "Track your workouts and find nearby gyms",
-    generator: 'v0.dev'
+  title: "KyoGo - Gym Management",
+  description: "Track your fitness journey with Japanese-inspired simplicity",
 }
 
 export default function RootLayout({

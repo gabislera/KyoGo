@@ -35,13 +35,13 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Welcome, {user?.name}</h1>
-        <p className="text-muted-foreground">Track your fitness journey and find nearby gyms</p>
+      <div className="border-l-4 border-red-500 pl-4">
+        <h1 className="text-3xl font-bold">Welcome back, {user?.name}</h1>
+        <p className="text-muted-foreground">Continue your fitness journey with discipline and focus</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="border-red-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Check-ins</CardTitle>
           </CardHeader>
@@ -51,22 +51,22 @@ export default function DashboardPage() {
             ) : (
               <div className="text-3xl font-bold flex items-center">
                 {metrics?.checkInsCount || 0}
-                <CheckCircle className="ml-2 h-5 w-5 text-green-500" />
+                <CheckCircle className="ml-2 h-5 w-5 text-rose-500" />
               </div>
             )}
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-orange-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Role</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {user?.role === "ADMIN" ? (
-                <span className="text-purple-500">Admin</span>
+                <span className="text-rose-500">Admin</span>
               ) : (
-                <span className="text-blue-500">Member</span>
+                <span className="text-orange-500">Member</span>
               )}
             </div>
           </CardContent>

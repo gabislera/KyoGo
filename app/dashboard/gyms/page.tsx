@@ -103,9 +103,9 @@ export default function GymsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Find Gyms</h1>
-        <p className="text-muted-foreground">Search for gyms or find ones nearby</p>
+      <div className="border-l-4 border-red-500 pl-4">
+        <h1 className="text-3xl font-bold">Find Training Grounds</h1>
+        <p className="text-muted-foreground">Discover dojos and gyms for your practice</p>
       </div>
 
       <Tabs defaultValue="search">
@@ -117,13 +117,17 @@ export default function GymsPage() {
         <TabsContent value="search" className="space-y-4">
           <div className="flex gap-2">
             <Input
-              placeholder="Search gyms..."
+              placeholder="Search training grounds..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1"
+              className="flex-1 focus:border-red-500"
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
-            <Button onClick={handleSearch} disabled={isLoading}>
+            <Button
+              onClick={handleSearch}
+              disabled={isLoading}
+              className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600"
+            >
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
               <span className="ml-2">Search</span>
             </Button>

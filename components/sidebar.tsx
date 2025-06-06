@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/hooks/use-auth"
-import { LayoutDashboard, Dumbbell, CheckCircle, PlusCircle, LogOut } from "lucide-react"
+import { LayoutDashboard, Dumbbell, CheckCircle, PlusCircle, LogOut, JapaneseYen, User } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -44,18 +46,32 @@ export function Sidebar() {
     },
   ]
 
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+  }
+
   return (
     <div className="h-full flex flex-col bg-card border-r border-border w-full md:w-64">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">GymTrack</h1>
-        <p className="text-muted-foreground text-sm mt-1">Fitness tracking made simple</p>
+      <div className="p-6 border-b border-red-500/20">
+        <div className="flex items-center space-x-2 mb-2">
+          <JapaneseYen className="w-6 h-6 text-rose-500" />
+          <h1 className="text-2xl font-bold">KyoGo</h1>
+        </div>
+        <p className="text-muted-foreground text-sm">Fitness with Japanese spirit</p>
       </div>
       <div className="flex-1 px-3 py-2 space-y-1">
         {routes.map((route) => (
           <Button
             key={route.href}
             variant={route.active ? "secondary" : "ghost"}
-            className={cn("w-full justify-start", route.active ? "bg-secondary" : "")}
+            className={cn(
+              "w-full justify-start",
+              route.active ? "bg-zinc-900 text-rose-500 border-l-2 border-red-500" : "hover:bg-zinc-900",
+            )}
             asChild
           >
             <Link href={route.href}>
@@ -70,7 +86,10 @@ export function Sidebar() {
             <Button
               key={route.href}
               variant={route.active ? "secondary" : "ghost"}
-              className={cn("w-full justify-start", route.active ? "bg-secondary" : "")}
+              className={cn(
+                "w-full justify-start",
+                route.active ? "bg-zinc-900 text-rose-500 border-l-2 border-red-500" : "hover:bg-zinc",
+              )}
               asChild
             >
               <Link href={route.href}>
@@ -80,11 +99,28 @@ export function Sidebar() {
             </Button>
           ))}
       </div>
-      <div className="p-3 mt-auto border-t border-border">
-        <Button variant="ghost" className="w-full justify-start text-muted-foreground" onClick={logout}>
-          <LogOut className="h-5 w-5 mr-3" />
-          Log out
-        </Button>
+      <div className="flex items-center gap-4 p-3 mt-auto border-t border-border">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback>{user?.name ? getInitials(user.name) : "U"}</AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="flex items-center">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={logout} className="flex items-center">
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   )

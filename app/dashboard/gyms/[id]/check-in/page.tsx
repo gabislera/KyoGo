@@ -187,7 +187,7 @@ export default function CheckInPage() {
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-red-500 mb-4">Location access is required for check-in</p>
+              <p className="text-sm text-rose-500 mb-4">Location access is required for check-in</p>
             )}
 
             <Button onClick={handleCheckIn} disabled={isCheckingIn || !userLocation} className="w-full">

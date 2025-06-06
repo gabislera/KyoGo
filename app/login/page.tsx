@@ -57,8 +57,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-lg border border-border">
         <div className="text-center">
-          <h1 className="text-2xl font-bold">Welcome Back</h1>
-          <p className="text-muted-foreground mt-2">Log in to continue your fitness journey</p>
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-500 rounded-sm"></div>
+            <h1 className="text-2xl font-bold">KyoGo</h1>
+          </div>
+          <h2 className="text-xl font-semibold">Welcome Back</h2>
+          <p className="text-muted-foreground mt-2">Continue your fitness journey</p>
         </div>
 
         <Form {...form}>
