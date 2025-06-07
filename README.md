@@ -1,152 +1,121 @@
-# Gym Management Frontend
+# KyoGo
 
-A modern, responsive frontend application for the Gym Management System built with Next.js 14, TypeScript, and Tailwind CSS.
+KyoGo é uma aplicação web moderna desenvolvida com Next.js 14, TypeScript e Tailwind CSS, que permite o gerenciamento completo de academias. O sistema oferece funcionalidades para administradores e membros, incluindo busca de academias próximas, sistema de check-in baseado em localização, e um painel administrativo.
 
-## Features
+## Funcionalidades
 
-- **Dark Theme**: Beautiful dark theme optimized for all screen sizes
-- **Role-Based Access Control**: Different features for Admin and Member users
-- **Responsive Design**: Fully responsive design that works on mobile and desktop
-- **Authentication**: JWT-based authentication with automatic token refresh
-- **Gym Management**: Search and find nearby gyms
-- **Check-in System**: Location-based check-ins with validation
-- **Admin Features**: Create gyms and validate check-ins (Admin only)
+- Cadastro e gerenciamento de academias
+- Sistema de check-in com validação de localização
+- Busca de academias próximas usando geolocalização
+- Autenticação com JWT e refresh automático de token
+- Controle de acesso baseado em funções (Admin e Membro)
+- Interface responsiva com tema escuro
+- Feedback visual com toasts para ações do usuário
 
-## Tech Stack
+## Tecnologias utilizadas
 
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **State Management**: React Context API
-- **HTTP Client**: Axios with interceptors
-- **Forms**: React Hook Form with Zod validation
-- **Icons**: Lucide React
+![Next.js](https://img.shields.io/badge/next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
+![Zod](https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white)
+![Axios](https://img.shields.io/badge/axios-%23646CFF.svg?style=for-the-badge&logo=axios&logoColor=white)
 
-## Getting Started
+## Pré-requisitos
 
-### Prerequisites
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (para o backend)
 
-- Node.js 18+ 
-- npm or yarn
-- Running API server (from the api-solid project)
+## Instalação
 
-### Installation
+### Backend (API Solid)
 
-1. Clone the repository:
-\`\`\`bash
-git clone <repository-url>
-cd gym-frontend
-\`\`\`
+Primeiro, clone e configure o backend:
 
-2. Install dependencies:
-\`\`\`bash
+```bash
+git clone <api-solid-repository-url>
+cd api-solid
 npm install
-\`\`\`
+# ou
+yarn install
 
-3. Create environment file:
-\`\`\`bash
+# Configure o ambiente
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+
+# Inicie o servidor usando Docker Compose
+docker-compose up -d
+```
+
+O servidor backend estará disponível em [http://localhost:3333](http://localhost:3333).
+
+### Frontend (KyoGo)
+
+Em outro terminal, clone e configure o frontend:
+
+```bash
+git clone <repository-url>
+cd KyoGo
+npm install
+# ou
+yarn install
+```
+
+## Configuração do Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```bash
 cp .env.local.example .env.local
-\`\`\`
+```
 
-4. Update the API URL in `.env.local`:
-\`\`\`env
+Configure as variáveis de ambiente:
+
+```env
 NEXT_PUBLIC_API_URL=http://localhost:3333
-\`\`\`
+```
 
-5. Start the development server:
-\`\`\`bash
+## Execução
+
+Para rodar o projeto em modo de desenvolvimento:
+
+```bash
 npm run dev
-\`\`\`
+# ou
+yarn dev
+```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Acesse [http://localhost:3000](http://localhost:3000) no navegador.
 
-## Project Structure
+## Funções do Usuário
 
-\`\`\`
-gym-frontend/
-├── app/                    # Next.js App Router pages
-│   ├── dashboard/         # Protected dashboard pages
-│   ├── login/            # Authentication pages
-│   ├── register/         
-│   └── layout.tsx        # Root layout
-├── components/           # Reusable components
-│   ├── ui/              # shadcn/ui components
-│   ├── auth-provider.tsx
-│   ├── header.tsx
-│   └── sidebar.tsx
-├── hooks/               # Custom React hooks
-├── lib/                # Utility functions
-└── public/             # Static assets
-\`\`\`
+### Membros
 
-## User Roles
+- Visualizar e buscar academias
+- Encontrar academias próximas usando geolocalização
+- Realizar check-in em academias (com verificação de localização)
+- Visualizar histórico de check-ins
+- Acessar métricas pessoais
 
-### Member Users
-- View and search gyms
-- Find nearby gyms using geolocation
-- Check in at gyms (location verified)
-- View check-in history
-- View personal metrics
+### Administradores
 
-### Admin Users
-- All member features
-- Create new gyms
-- Validate member check-ins
-- Access to admin dashboard
+- Todas as funcionalidades de membro
+- Criar novas academias
+- Validar check-ins de membros
+- Acesso ao painel administrativo
 
-## API Integration
+## Variáveis de Ambiente
 
-The frontend integrates with all API endpoints:
+- `NEXT_PUBLIC_API_URL`: URL do servidor API (obrigatória para comunicação com o backend)
 
-- **Authentication**: `/users`, `/sessions`, `/token/refresh`, `/me`
-- **Gyms**: `/gyms/search`, `/gyms/nearby`, `/gyms` (POST)
-- **Check-ins**: `/gyms/:id/check-ins`, `/check-ins/history`, `/check-ins/metrics`, `/check-ins/:id/validate`
+## Build para Produção
 
-## Features
-
-### Authentication
-- User registration and login
-- JWT token management with automatic refresh
-- Protected routes with role-based access
-
-### Gym Management
-- Search gyms by name with pagination
-- Find nearby gyms using geolocation
-- Responsive gym cards with detailed information
-
-### Check-in System
-- Location-based check-ins with GPS verification
-- Real-time location validation
-- Check-in history with pagination
-- Admin validation of check-ins
-
-### Responsive Design
-- Mobile-first design approach
-- Collapsible sidebar for mobile
-- Touch-friendly interface
-- Optimized for all screen sizes
-
-## Environment Variables
-
-\`\`\`env
-NEXT_PUBLIC_API_URL=http://localhost:3333  # API server URL
-\`\`\`
-
-## Building for Production
-
-\`\`\`bash
+```bash
 npm run build
 npm start
-\`\`\`
+```
 
-## Contributing
+## Licença
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
