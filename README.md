@@ -1,3 +1,5 @@
+<img width="1510" alt="Captura de Tela 2025-06-07 às 14 31 11" src="https://github.com/user-attachments/assets/0267c164-9b14-4243-95e0-621565f000b5" />
+
 # KyoGo
 
 KyoGo é uma aplicação web moderna desenvolvida com Next.js 14, TypeScript e Tailwind CSS, que permite o gerenciamento completo de academias. O sistema oferece funcionalidades para administradores e membros, incluindo busca de academias próximas, sistema de check-in baseado em localização, e um painel administrativo.
