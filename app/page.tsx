@@ -9,7 +9,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto py-6 px-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <JapaneseYen className="w-6 h-6 text-rose-500" />
+          <JapaneseYen className="w-6 h-6 text-red-500" />
           <h1 className="text-2xl font-bold">KyoGo</h1>
         </div>
         <div className="flex gap-4">

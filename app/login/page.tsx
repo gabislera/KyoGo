@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/hooks/use-auth"
+import { JapaneseYen } from "lucide-react"
 
 const loginSchema = z.object({
   email: z.string().email("Por favor, insira um email válido"),
@@ -39,7 +40,7 @@ export default function LoginPage() {
       await login(data.email, data.password)
       toast({
         title: "Login realizado com sucesso!",
-        description: "Bem-vindo de volta ao GymTrack.",
+        description: "Bem-vindo de volta.",
       })
       router.push("/dashboard")
     } catch (error: any) {
@@ -58,8 +59,9 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-lg border border-border">
         <div className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-500 rounded-sm"></div>
-            <h1 className="text-2xl font-bold">KyoGo</h1>
+            <Link href='/'>
+              <JapaneseYen className="w-6 h-6 text-red-500" />
+            </Link>
           </div>
           <h2 className="text-xl font-semibold">Bem-vindo de Volta</h2>
           <p className="text-muted-foreground mt-2">Continue sua jornada fitness</p>
