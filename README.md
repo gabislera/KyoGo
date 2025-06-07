@@ -1,4 +1,4 @@
-<img width="1510" alt="Captura de Tela 2025-06-07 às 14 31 11" src="https://github.com/user-attachments/assets/0267c164-9b14-4243-95e0-621565f000b5" />
+<img width="1511" alt="Captura de Tela 2025-06-07 às 14 34 47" src="https://github.com/user-attachments/assets/8720b263-2f4c-4f4d-b0ed-318e57d2a53f" />
 
 # KyoGo
 
