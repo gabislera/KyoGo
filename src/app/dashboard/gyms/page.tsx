@@ -104,10 +104,18 @@ export default function GymsPage() {
       </div>
 
       <Tabs defaultValue="nearby">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="nearby">Próximas</TabsTrigger>
-          <TabsTrigger value="search">Buscar</TabsTrigger>
-        </TabsList>
+        <div className="flex items-center justify-between">
+          <TabsList className="grid w-full max-w-80 grid-cols-2">
+            <TabsTrigger value="nearby">Próximas</TabsTrigger>
+            <TabsTrigger value="search">Buscar</TabsTrigger>
+          </TabsList>
+
+          {user?.role === "ADMIN" && (
+        <div className="flex justify-end">
+          <Button onClick={() => router.push("/dashboard/gyms/create")}>Criar Nova Academia</Button>
+        </div>
+      )}
+        </div>
 
         <TabsContent value="search" className="space-y-4">
           <div className="flex gap-2">
@@ -164,11 +172,7 @@ export default function GymsPage() {
         </TabsContent>
       </Tabs>
 
-      {user?.role === "ADMIN" && (
-        <div className="flex justify-end">
-          <Button onClick={() => router.push("/dashboard/gyms/create")}>Criar Nova Academia</Button>
-        </div>
-      )}
+
     </div>
   )
 }
