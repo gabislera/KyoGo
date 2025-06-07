@@ -164,7 +164,7 @@ export default function CheckInPage() {
               Para fazer check-in, você deve estar fisicamente presente na academia. Sua localização será verificada.
             </p>
 
-            {userLocation ? (
+            {/* {userLocation ? (
               <div className="text-sm text-muted-foreground mb-4">
                 <p>Sua localização atual:</p>
                 <div className="mt-2 rounded-lg overflow-hidden">
@@ -173,7 +173,7 @@ export default function CheckInPage() {
               </div>
             ) : (
               <p className="text-sm text-rose-500 mb-4">Acesso à localização é necessário para check-in</p>
-            )}
+            )} */}
 
             <Button onClick={handleCheckIn} disabled={isCheckingIn || !userLocation} className="w-full">
               {isCheckingIn ? (

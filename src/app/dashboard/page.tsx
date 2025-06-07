@@ -62,13 +62,17 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Função</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {user?.role === "ADMIN" ? (
-                <span className="text-rose-500">Administrador</span>
-              ) : (
-                <span className="text-orange-500">Membro</span>
-              )}
-            </div>
+            {isLoading ? (
+              <Skeleton className="h-10 w-32" />
+            ) : (
+              <div className="text-2xl font-bold">
+                {user?.role === "ADMIN" ? (
+                  <span className="text-rose-500">Administrador</span>
+                ) : (
+                  <span className="text-orange-500">Membro</span>
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
 
