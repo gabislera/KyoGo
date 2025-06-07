@@ -34,8 +34,8 @@ KyoGo é uma aplicação web moderna desenvolvida com Next.js 14, TypeScript e T
 Primeiro, clone e configure o backend:
 
 ```bash
-git clone <api-solid-repository-url>
-cd api-solid
+git clone https://github.com/gabislera/KyoGo-api.git
+cd KyoGo-api
 npm install
 # ou
 yarn install
@@ -55,7 +55,7 @@ O servidor backend estará disponível em [http://localhost:3333](http://localho
 Em outro terminal, clone e configure o frontend:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/gabislera/KyoGo.git
 cd KyoGo
 npm install
 # ou
