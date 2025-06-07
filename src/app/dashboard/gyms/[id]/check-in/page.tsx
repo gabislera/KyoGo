@@ -104,8 +104,8 @@ export default function CheckInPage() {
       let errorMessage = "Falha ao fazer check-in. Por favor, tente novamente."
 
       if (error.response?.data?.message) {
-        if (error.response.data.message.includes("distance")) {
-          errorMessage = "Você está muito longe desta academia para fazer check-in."
+        if (error.response.data.message.includes("Max distance reached")) {
+          errorMessage = "Você está muito longe da academia."
         } else if (error.response.data.message.includes("check-in")) {
           errorMessage = "Você já fez check-in hoje."
         }

@@ -18,22 +18,22 @@ import { NearbyGyms } from "@/src/components/nearby-gyms"
 import { toast } from "sonner"
 
 const createGymSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
+  title: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
   description: z.string().optional(),
   phone: z.string().optional(),
-  latitude: z.number().min(-90, "Latitude must be between -90 and 90").max(90, "Latitude must be between -90 and 90"),
+  latitude: z.number().min(-90, "A latitude deve estar entre -90 e 90").max(90, "A latitude deve estar entre -90 e 90"),
   longitude: z
     .number()
-    .min(-180, "Longitude must be between -180 and 180")
-    .max(180, "Longitude must be between -180 and 180"),
+    .min(-180, "A longitude deve estar entre -180 e 180")
+    .max(180, "A longitude deve estar entre -180 e 180"),
   address: z.object({
-    zipcode: z.string().regex(/^\d{5}-?\d{3}$/, { message: 'Invalid ZIP code format. Example: 00000-000' }),
-    street: z.string().min(1, { message: 'Street is required' }),
-    number: z.coerce.number().min(1, { message: 'Number is required' }),
+    zipcode: z.string().regex(/^\d{5}-?\d{3}$/, { message: 'Formato de CEP inválido. Exemplo: 00000-000' }),
+    street: z.string().min(1, { message: 'Rua é obrigatória' }),
+    number: z.coerce.number().min(1, { message: 'Número é obrigatório' }),
     complement: z.string().optional(),
-    neighborhood: z.string().min(1, { message: 'Neighborhood is required' }),
-    city: z.string().min(1, { message: 'City is required' }),
-    state: z.string().min(1, { message: 'State is required' }),
+    neighborhood: z.string().min(1, { message: 'Bairro é obrigatório' }),
+    city: z.string().min(1, { message: 'Cidade é obrigatória' }),
+    state: z.string().min(1, { message: 'Estado é obrigatório' }),
   }),
 })
 
@@ -86,9 +86,9 @@ export default function CreateGymPage() {
         if (data.erro) {
           form.setError("address.zipcode", {
             type: "manual",
-            message: "ZIP code not found",
+            message: "CEP não encontrado",
           })
-          throw new Error("ZIP code not found")
+          throw new Error("CEP não encontrado")
         }
 
         // Set address fields
@@ -99,7 +99,7 @@ export default function CreateGymPage() {
 
         // Immediately geocode the address to update the map
         if (data.logradouro && data.bairro && data.localidade && data.uf) {
-          const address = `${data.logradouro}, ${form.getValues("address.number") || 0}, ${data.bairro}, ${data.localidade}, ${data.uf}, Brazil`
+          const address = `${data.logradouro}, ${form.getValues("address.number") || 0}, ${data.bairro}, ${data.localidade}, ${data.uf}, Brasil`
           
           // Use Google Maps Geocoding API
           const geocoder = new google.maps.Geocoder()
@@ -144,7 +144,7 @@ export default function CreateGymPage() {
   }) => {
     setIsGeocoding(true)
     try {
-      const addressString = `${address.street}, ${address.number}, ${address.neighborhood}, ${address.city}, ${address.state}, Brazil`
+      const addressString = `${address.street}, ${address.number}, ${address.neighborhood}, ${address.city}, ${address.state}, Brasil`
       
       // Use Google Maps Geocoding API
       const geocoder = new google.maps.Geocoder()
@@ -330,7 +330,6 @@ export default function CreateGymPage() {
             />
           </CardContent>
         </Card> */}
-
         <Card>
           <CardHeader>
             <CardTitle>Criar Nova Academia</CardTitle>
@@ -371,9 +370,9 @@ export default function CreateGymPage() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number (Optional)</FormLabel>
+                      <FormLabel>Telefone (Opcional)</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter phone number" {...field} value={field.value || ""} />
+                        <Input placeholder="Digite o telefone" {...field} value={field.value || ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -381,7 +380,7 @@ export default function CreateGymPage() {
                 />
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Address</h3>
+                  <h3 className="text-lg font-medium">Endereço</h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
@@ -389,7 +388,7 @@ export default function CreateGymPage() {
                       name="address.zipcode"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>ZIP Code</FormLabel>
+                          <FormLabel>CEP</FormLabel>
                           <FormControl>
                             <Input 
                               placeholder="00000-000" 
@@ -411,9 +410,9 @@ export default function CreateGymPage() {
                       name="address.street"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Street</FormLabel>
+                          <FormLabel>Rua</FormLabel>
                           <FormControl>
-                            <Input placeholder="Street name" {...field} disabled={isLoadingCep} />
+                            <Input placeholder="Nome da rua" {...field} disabled={isLoadingCep} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -425,7 +424,7 @@ export default function CreateGymPage() {
                       name="address.number"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Number</FormLabel>
+                          <FormLabel>Número</FormLabel>
                           <FormControl>
                             <Input 
                               type="number" 
@@ -444,9 +443,9 @@ export default function CreateGymPage() {
                       name="address.complement"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Complement</FormLabel>
+                          <FormLabel>Complemento</FormLabel>
                           <FormControl>
-                            <Input placeholder="Apt 123" {...field} />
+                            <Input placeholder="Apto 123" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -458,9 +457,9 @@ export default function CreateGymPage() {
                       name="address.neighborhood"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Neighborhood</FormLabel>
+                          <FormLabel>Bairro</FormLabel>
                           <FormControl>
-                            <Input placeholder="Neighborhood" {...field} disabled={isLoadingCep} />
+                            <Input placeholder="Bairro" {...field} disabled={isLoadingCep} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -472,9 +471,9 @@ export default function CreateGymPage() {
                       name="address.city"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>City</FormLabel>
+                          <FormLabel>Cidade</FormLabel>
                           <FormControl>
-                            <Input placeholder="City" {...field} disabled={isLoadingCep} />
+                            <Input placeholder="Cidade" {...field} disabled={isLoadingCep} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -486,9 +485,9 @@ export default function CreateGymPage() {
                       name="address.state"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>State</FormLabel>
+                          <FormLabel>Estado</FormLabel>
                           <FormControl>
-                            <Input placeholder="State" {...field} disabled={isLoadingCep} />
+                            <Input placeholder="Estado" {...field} disabled={isLoadingCep} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -499,10 +498,10 @@ export default function CreateGymPage() {
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-medium">Location</h3>
+                    <h3 className="text-lg font-medium">Localização</h3>
                     <Button type="button" variant="outline" onClick={getCurrentLocation} disabled={isGeocoding}>
                       <MapPin className="h-4 w-4 mr-2" />
-                      {isGeocoding ? "Updating location..." : "Use Current Location"}
+                      {isGeocoding ? "Atualizando localização..." : "Usar minha localização"}
                     </Button>
                   </div>
 
@@ -524,7 +523,7 @@ export default function CreateGymPage() {
                 </div>
 
                 <Button type="submit" className="w-full bg-rose-500 hover:bg-rose-600" disabled={isLoading}>
-                  {isLoading ? "Creating gym..." : "Create Gym"}
+                  {isLoading ? "Criando academia..." : "Criar Academia"}
                 </Button>
               </form>
             </Form>
