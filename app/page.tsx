@@ -14,13 +14,13 @@ export default function Home() {
         </div>
         <div className="flex gap-4">
           <Button variant="outline" asChild>
-            <Link href="/login">Login</Link>
+            <Link href="/login">Entrar</Link>
           </Button>
           <Button
             asChild
             className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600"
           >
-            <Link href="/register">Register</Link>
+            <Link href="/register">Registrar</Link>
           </Button>
         </div>
       </header>
@@ -32,7 +32,7 @@ export default function Home() {
 
       <footer className="container mx-auto py-8 px-4 border-t border-border mt-12">
         <div className="text-center text-muted-foreground">
-          <p>© 2025 KyoGo. All rights reserved.</p>
+          <p>© 2025 KyoGo. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

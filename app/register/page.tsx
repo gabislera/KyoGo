@@ -13,9 +13,9 @@ import { useToast } from "@/components/ui/use-toast"
 import { api } from "@/lib/api"
 
 const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
+  email: z.string().email("Por favor, insira um email válido"),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 })
 
 type RegisterFormValues = z.infer<typeof registerSchema>
@@ -39,14 +39,14 @@ export default function RegisterPage() {
     try {
       await api.post("/users", data)
       toast({
-        title: "Account created successfully!",
-        description: "You can now log in with your credentials.",
+        title: "Conta criada com sucesso!",
+        description: "Agora você pode fazer login com suas credenciais.",
       })
       router.push("/login")
     } catch (error: any) {
       toast({
-        title: "Registration failed",
-        description: error.response?.data?.message || "Something went wrong",
+        title: "Falha no registro",
+        description: error.response?.data?.message || "Algo deu errado",
         variant: "destructive",
       })
     } finally {
@@ -62,8 +62,8 @@ export default function RegisterPage() {
             <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-500 rounded-sm"></div>
             <h1 className="text-2xl font-bold">KyoGo</h1>
           </div>
-          <h2 className="text-xl font-semibold">Begin Your Journey</h2>
-          <p className="text-muted-foreground mt-2">Create an account to start your fitness path</p>
+          <h2 className="text-xl font-semibold">Comece Sua Jornada</h2>
+          <p className="text-muted-foreground mt-2">Crie uma conta para iniciar seu caminho fitness</p>
         </div>
 
         <Form {...form}>
@@ -73,9 +73,9 @@ export default function RegisterPage() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input placeholder="João Silva" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,7 +89,7 @@ export default function RegisterPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="john.doe@example.com" {...field} />
+                    <Input type="email" placeholder="joao.silva@exemplo.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Senha</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="******" {...field} />
                   </FormControl>
@@ -111,16 +111,16 @@ export default function RegisterPage() {
             />
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Creating account..." : "Register"}
+              {isLoading ? "Criando conta..." : "Registrar"}
             </Button>
           </form>
         </Form>
 
         <div className="text-center text-sm">
           <p className="text-muted-foreground">
-            Already have an account?{" "}
+            Já tem uma conta?{" "}
             <Link href="/login" className="text-primary hover:underline">
-              Log in
+              Entrar
             </Link>
           </p>
         </div>

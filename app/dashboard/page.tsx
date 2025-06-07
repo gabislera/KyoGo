@@ -36,14 +36,14 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div className="border-l-4 border-red-500 pl-4">
-        <h1 className="text-3xl font-bold">Welcome back, {user?.name}</h1>
-        <p className="text-muted-foreground">Continue your fitness journey with discipline and focus</p>
+        <h1 className="text-3xl font-bold">Bem-vindo de volta, {user?.name}</h1>
+        <p className="text-muted-foreground">Continue sua jornada fitness com disciplina e foco</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-red-500/20">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Check-ins</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total de Check-ins</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -59,14 +59,14 @@ export default function DashboardPage() {
 
         <Card className="border-orange-500/20">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Role</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Função</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {user?.role === "ADMIN" ? (
-                <span className="text-rose-500">Admin</span>
+                <span className="text-rose-500">Administrador</span>
               ) : (
-                <span className="text-orange-500">Member</span>
+                <span className="text-orange-500">Membro</span>
               )}
             </div>
           </CardContent>
@@ -74,7 +74,7 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Member Since</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Membro Desde</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold flex items-center">
@@ -88,26 +88,26 @@ export default function DashboardPage() {
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle>Ações Rápidas</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button asChild className="w-full">
               <Link href="/dashboard/gyms">
                 <MapPin className="mr-2 h-4 w-4" />
-                Find Gyms
+                Encontrar Academias
               </Link>
             </Button>
             <Button asChild variant="outline" className="w-full">
               <Link href="/dashboard/check-ins">
                 <CheckCircle className="mr-2 h-4 w-4" />
-                View Check-in History
+                Ver Histórico de Check-ins
               </Link>
             </Button>
             {user?.role === "ADMIN" && (
               <Button asChild variant="secondary" className="w-full">
                 <Link href="/dashboard/gyms/create">
                   <MapPin className="mr-2 h-4 w-4" />
-                  Create New Gym
+                  Criar Nova Academia
                 </Link>
               </Button>
             )}
@@ -116,7 +116,7 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Atividade Recente</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -127,16 +127,16 @@ export default function DashboardPage() {
               </div>
             ) : metrics?.checkInsCount === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                <p>No check-ins yet. Start your fitness journey today!</p>
+                <p>Nenhum check-in ainda. Comece sua jornada fitness hoje!</p>
                 <Button asChild className="mt-4">
-                  <Link href="/dashboard/gyms">Find Gyms</Link>
+                  <Link href="/dashboard/gyms">Encontrar Academias</Link>
                 </Button>
               </div>
             ) : (
               <div className="text-center py-8">
-                <p>View your complete check-in history</p>
+                <p>Veja seu histórico completo de check-ins</p>
                 <Button asChild variant="outline" className="mt-4">
-                  <Link href="/dashboard/check-ins">Check-in History</Link>
+                  <Link href="/dashboard/check-ins">Histórico de Check-ins</Link>
                 </Button>
               </div>
             )}

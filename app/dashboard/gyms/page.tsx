@@ -105,20 +105,21 @@ export default function GymsPage() {
   return (
     <div className="space-y-6">
       <div className="border-l-4 border-red-500 pl-4">
-        <h1 className="text-3xl font-bold">Find Training Grounds</h1>
-        <p className="text-muted-foreground">Discover dojos and gyms for your practice</p>
+      <h1 className="text-3xl font-bold">Encontre Locais de Treinamento</h1>
+      <p className="text-muted-foreground">Descubra dojôs e academias para a sua prática</p>
+
       </div>
 
-      <Tabs defaultValue="search">
+      <Tabs defaultValue="nearby">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="search">Search</TabsTrigger>
-          <TabsTrigger value="nearby">Nearby</TabsTrigger>
+          <TabsTrigger value="nearby">Próximas</TabsTrigger>
+          <TabsTrigger value="search">Buscar</TabsTrigger>
         </TabsList>
 
         <TabsContent value="search" className="space-y-4">
           <div className="flex gap-2">
             <Input
-              placeholder="Search training grounds..."
+              placeholder="Buscar academias..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1 focus:border-red-500"
@@ -130,7 +131,7 @@ export default function GymsPage() {
               className="bg-rose-500 hover:bg-rose-600"
             >
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-              <span className="ml-2">Search</span>
+              <span className="ml-2">Buscar</span>
             </Button>
           </div>
 
@@ -143,8 +144,8 @@ export default function GymsPage() {
           ) : (
             <div className="text-center py-10">
               <Dumbbell className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-medium">No gyms found</h3>
-              <p className="text-muted-foreground">Try searching for a different gym name</p>
+              <h3 className="mt-4 text-lg font-medium">Nenhuma academia encontrada</h3>
+              <p className="text-muted-foreground">Tente buscar por um nome diferente</p>
             </div>
           )}
         </TabsContent>
@@ -163,8 +164,8 @@ export default function GymsPage() {
           ) : (
             <div className="text-center py-10">
               <MapPin className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-medium">No nearby gyms</h3>
-              <p className="text-muted-foreground">There are no gyms near your current location</p>
+              <h3 className="mt-4 text-lg font-medium">Nenhuma academia próxima</h3>
+              <p className="text-muted-foreground">Não há academias próximas à sua localização atual</p>
             </div>
           )}
         </TabsContent>
@@ -172,7 +173,7 @@ export default function GymsPage() {
 
       {user?.role === "ADMIN" && (
         <div className="flex justify-end">
-          <Button onClick={() => router.push("/dashboard/gyms/create")}>Create New Gym</Button>
+          <Button onClick={() => router.push("/dashboard/gyms/create")}>Criar Nova Academia</Button>
         </div>
       )}
     </div>
@@ -204,7 +205,7 @@ function GymCard({
       </CardContent>
       <CardFooter className="bg-secondary/20 p-4">
         <Button onClick={onCheckIn} className="w-full">
-          Check In
+          Fazer Check-in
         </Button>
       </CardFooter>
     </Card>

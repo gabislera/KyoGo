@@ -19,13 +19,13 @@ export function Sidebar() {
 
   const routes = [
     {
-      label: "Dashboard",
+      label: "Painel",
       icon: <LayoutDashboard className="h-5 w-5" />,
       href: "/dashboard",
       active: pathname === "/dashboard",
     },
     {
-      label: "Gyms",
+      label: "Academias",
       icon: <Dumbbell className="h-5 w-5" />,
       href: "/dashboard/gyms",
       active: pathname === "/dashboard/gyms",
@@ -40,7 +40,7 @@ export function Sidebar() {
 
   const adminRoutes = [
     {
-      label: "Create Gym",
+      label: "Criar Academia",
       icon: <PlusCircle className="h-5 w-5" />,
       href: "/dashboard/gyms/create",
       active: pathname === "/dashboard/gyms/create",
@@ -117,15 +117,15 @@ export function Sidebar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex items-center">
               <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <span>Perfil</span>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={logout} className="flex items-center">
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
+              <span>Sair</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -135,12 +135,12 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* Barra lateral para desktop */}
       <div className="hidden md:flex h-[calc(100% - 65px)]">
         <SidebarContent />
       </div>
 
-      {/* Mobile Sidebar trigger (top bar button) */}
+      {/* Botão da barra lateral para mobile */}
       <div className="md:hidden p-4 flex items-center justify-between border-b border-red-500/20">
         <div className="flex items-center space-x-2">
           <JapaneseYen className="w-6 h-6 text-rose-500" />
@@ -150,7 +150,7 @@ export function Sidebar() {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" >
               <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
+              <span className="sr-only">Abrir menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-64">
@@ -161,4 +161,3 @@ export function Sidebar() {
     </>
   )
 }
-

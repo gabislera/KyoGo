@@ -60,8 +60,8 @@ export default function CheckInsPage() {
     } catch (error) {
       console.error("Failed to fetch check-ins:", error)
       toast({
-        title: "Error",
-        description: "Failed to fetch check-in history.",
+        title: "Erro",
+        description: "Falha ao buscar histórico de check-ins.",
         variant: "destructive",
       })
     } finally {
@@ -82,14 +82,14 @@ export default function CheckInsPage() {
       )
 
       toast({
-        title: "Check-in validated",
-        description: "The check-in has been successfully validated.",
+        title: "Check-in validado",
+        description: "O check-in foi validado com sucesso.",
       })
     } catch (error) {
       console.error("Failed to validate check-in:", error)
       toast({
-        title: "Validation failed",
-        description: "Failed to validate the check-in. It may be too late to validate.",
+        title: "Falha na validação",
+        description: "Falha ao validar o check-in. Pode ser tarde demais para validar.",
         variant: "destructive",
       })
     } finally {
@@ -99,7 +99,7 @@ export default function CheckInsPage() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return new Intl.DateTimeFormat("en-US", {
+    return new Intl.DateTimeFormat("pt-BR", {
       dateStyle: "medium",
       timeStyle: "short",
     }).format(date)
@@ -108,8 +108,8 @@ export default function CheckInsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Check-in History</h1>
-        <p className="text-muted-foreground">View your past check-ins at various gyms</p>
+        <h1 className="text-3xl font-bold">Histórico de Check-ins</h1>
+        <p className="text-muted-foreground">Veja seus check-ins anteriores em várias academias</p>
       </div>
 
       {isLoading ? (
@@ -123,7 +123,7 @@ export default function CheckInsPage() {
               <CardContent className="p-6">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-semibold text-lg">{checkIn.gym?.title || "Unknown Gym"}</h3>
+                    <h3 className="font-semibold text-lg">{checkIn.gym?.title || "Academia Desconhecida"}</h3>
                     <div className="flex items-center text-sm text-muted-foreground mt-1">
                       <Calendar className="h-4 w-4 mr-1" />
                       <span>{formatDate(checkIn.created_at)}</span>
@@ -133,7 +133,7 @@ export default function CheckInsPage() {
                     {checkIn.validated_at ? (
                       <div className="flex items-center text-green-500">
                         <CheckCircle className="h-5 w-5 mr-1" />
-                        <span>Validated</span>
+                        <span>Validado</span>
                       </div>
                     ) : user?.role === "ADMIN" ? (
                       <Button
@@ -146,10 +146,10 @@ export default function CheckInsPage() {
                         ) : (
                           <CheckCircle className="h-4 w-4 mr-1" />
                         )}
-                        Validate
+                        Validar
                       </Button>
                     ) : (
-                      <div className="text-sm text-muted-foreground">Awaiting validation</div>
+                      <div className="text-sm text-muted-foreground">Aguardando validação</div>
                     )}
                   </div>
                 </div>
@@ -159,21 +159,21 @@ export default function CheckInsPage() {
 
           <div className="flex justify-center gap-2">
             <Button variant="outline" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>
-              Previous
+              Anterior
             </Button>
-            <span className="flex items-center px-4">Page {page}</span>
+            <span className="flex items-center px-4">Página {page}</span>
             <Button variant="outline" onClick={() => setPage((p) => p + 1)} disabled={checkIns.length < 20}>
-              Next
+              Próxima
             </Button>
           </div>
         </div>
       ) : (
         <div className="text-center py-10">
           <CheckCircle className="h-12 w-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-medium">No check-ins yet</h3>
-          <p className="text-muted-foreground">Start your fitness journey by checking in at a gym</p>
+          <h3 className="mt-4 text-lg font-medium">Nenhum check-in ainda</h3>
+          <p className="text-muted-foreground">Comece sua jornada fitness fazendo check-in em uma academia</p>
           <Button className="mt-4" asChild>
-            <Link href="/dashboard/gyms">Find Gyms</Link>
+            <Link href="/dashboard/gyms">Encontrar Academias</Link>
           </Button>
         </div>
       )}

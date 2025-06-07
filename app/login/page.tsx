@@ -13,8 +13,8 @@ import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/hooks/use-auth"
 
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email"),
-  password: z.string().min(1, "Password is required"),
+  email: z.string().email("Por favor, insira um email válido"),
+  password: z.string().min(1, "Senha é obrigatória"),
 })
 
 type LoginFormValues = z.infer<typeof loginSchema>
@@ -38,14 +38,14 @@ export default function LoginPage() {
     try {
       await login(data.email, data.password)
       toast({
-        title: "Login successful!",
-        description: "Welcome back to GymTrack.",
+        title: "Login realizado com sucesso!",
+        description: "Bem-vindo de volta ao GymTrack.",
       })
       router.push("/dashboard")
     } catch (error: any) {
       toast({
-        title: "Login failed",
-        description: error.response?.data?.message || "Invalid credentials",
+        title: "Falha no login",
+        description: error.response?.data?.message || "Credenciais inválidas",
         variant: "destructive",
       })
     } finally {
@@ -61,8 +61,8 @@ export default function LoginPage() {
             <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-500 rounded-sm"></div>
             <h1 className="text-2xl font-bold">KyoGo</h1>
           </div>
-          <h2 className="text-xl font-semibold">Welcome Back</h2>
-          <p className="text-muted-foreground mt-2">Continue your fitness journey</p>
+          <h2 className="text-xl font-semibold">Bem-vindo de Volta</h2>
+          <p className="text-muted-foreground mt-2">Continue sua jornada fitness</p>
         </div>
 
         <Form {...form}>
@@ -74,7 +74,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="john.doe@example.com" {...field} />
+                    <Input type="email" placeholder="joao.silva@exemplo.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -86,7 +86,7 @@ export default function LoginPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Senha</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="******" {...field} />
                   </FormControl>
@@ -96,16 +96,16 @@ export default function LoginPage() {
             />
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
           </form>
         </Form>
 
         <div className="text-center text-sm">
           <p className="text-muted-foreground">
-            Don&apos;t have an account?{" "}
+            Não tem uma conta?{" "}
             <Link href="/register" className="text-primary hover:underline">
-              Register
+              Registrar
             </Link>
           </p>
         </div>
