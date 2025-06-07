@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2, Search, MapPin, Dumbbell } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
+import Map from "@/components/Map"
 
 interface Gym {
   id: string
@@ -186,20 +187,19 @@ function GymCard({
   onCheckIn: () => void
 }) {
   return (
-    <Card className="overflow-hidden h-full flex flex-col justify-between">
-      <CardContent className="p-6">
-        <h3 className="text-lg font-bold mb-2">{gym.title}</h3>
-        {gym.description && <p className="text-muted-foreground text-sm mb-4">{gym.description}</p>}
-        {gym.phone && (
-          <div className="flex items-center text-sm text-muted-foreground mb-2">
-            <span>📞 {gym.phone}</span>
-          </div>
-        )}
-        <div className="flex items-center text-sm text-muted-foreground">
-          <MapPin className="h-4 w-4 mr-1" />
-          <span>
-            {Number(gym.latitude).toFixed(6)}, {Number(gym.longitude).toFixed(6)}
-          </span>
+    <Card className="overflow-hidden h-full flex flex-col">
+      <CardContent className="p-6 flex flex-col flex-1">
+        <div className="flex flex-col flex-1">
+          <h3 className="text-lg font-bold mb-2">{gym.title}</h3>
+          {gym.description && <p className="text-muted-foreground text-sm mb-4">{gym.description}</p>}
+          {gym.phone && (
+            <div className="flex items-center text-sm text-muted-foreground mb-4">
+              <span>📞 {gym.phone}</span>
+            </div>
+          )}
+        </div>
+        <div className="mt-4 rounded-lg overflow-hidden">
+          <Map latitude={Number(gym.latitude)} longitude={Number(gym.longitude)} height="200px" />
         </div>
       </CardContent>
       <CardFooter className="bg-secondary/20 p-4">

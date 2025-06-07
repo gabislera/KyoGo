@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2, MapPin, ArrowLeft, CheckCircle } from "lucide-react"
+import Map from "@/components/Map"
 
 interface Gym {
   id: string
@@ -166,11 +167,8 @@ export default function CheckInPage() {
           <div>
             <h3 className="text-lg font-bold">{gym.title}</h3>
             {gym.description && <p className="text-muted-foreground">{gym.description}</p>}
-            <div className="flex items-center mt-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 mr-1" />
-              <span>
-                {Number(gym.latitude).toFixed(6)}, {Number(gym.longitude).toFixed(6)}
-              </span>
+            <div className="mt-4 rounded-lg overflow-hidden">
+              <Map latitude={Number(gym.latitude)} longitude={Number(gym.longitude)} height="200px" />
             </div>
           </div>
 
@@ -182,9 +180,9 @@ export default function CheckInPage() {
             {userLocation ? (
               <div className="text-sm text-muted-foreground mb-4">
                 <p>Your current location:</p>
-                <p className="font-mono">
-                  {userLocation.latitude.toFixed(6)}, {userLocation.longitude.toFixed(6)}
-                </p>
+                <div className="mt-2 rounded-lg overflow-hidden">
+                  <Map latitude={userLocation.latitude} longitude={userLocation.longitude} height="200px" />
+                </div>
               </div>
             ) : (
               <p className="text-sm text-rose-500 mb-4">Location access is required for check-in</p>

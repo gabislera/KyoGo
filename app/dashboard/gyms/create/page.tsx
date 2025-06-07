@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
@@ -14,6 +14,7 @@ import { api } from "@/lib/api"
 import { useAuth } from "@/hooks/use-auth"
 import { ArrowLeft, MapPin } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Map from "@/components/Map"
 
 const createGymSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -45,6 +46,41 @@ export default function CreateGymPage() {
     },
   })
 
+  // Get current location
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          form.setValue("latitude", position.coords.latitude)
+          form.setValue("longitude", position.coords.longitude)
+          toast({
+            title: "Location updated",
+            description: "Current location has been set.",
+          })
+        },
+        (error) => {
+          console.error("Error getting location:", error)
+          toast({
+            title: "Location access denied",
+            description: "Please enable location services or enter coordinates manually.",
+            variant: "destructive",
+          })
+        },
+      )
+    } else {
+      toast({
+        title: "Geolocation not supported",
+        description: "Your browser doesn't support geolocation.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  // Get user's location when component mounts
+  useEffect(() => {
+    getCurrentLocation()
+  }, [])
+
   // Redirect if not admin
   if (user?.role !== "ADMIN") {
     router.push("/dashboard")
@@ -75,36 +111,6 @@ export default function CreateGymPage() {
       })
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  // Get current location
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          form.setValue("latitude", position.coords.latitude)
-          form.setValue("longitude", position.coords.longitude)
-          toast({
-            title: "Location updated",
-            description: "Current location has been set.",
-          })
-        },
-        (error) => {
-          console.error("Error getting location:", error)
-          toast({
-            title: "Location access denied",
-            description: "Please enable location services or enter coordinates manually.",
-            variant: "destructive",
-          })
-        },
-      )
-    } else {
-      toast({
-        title: "Geolocation not supported",
-        description: "Your browser doesn't support geolocation.",
-        variant: "destructive",
-      })
     }
   }
 
@@ -171,6 +177,22 @@ export default function CreateGymPage() {
                     <MapPin className="h-4 w-4 mr-2" />
                     Use Current Location
                   </Button>
+                </div>
+
+                <div className="rounded-lg overflow-hidden">
+                  <Map 
+                    latitude={form.watch("latitude") || 0} 
+                    longitude={form.watch("longitude") || 0} 
+                    height="300px"
+                    onMapClick={(lat, lng) => {
+                      form.setValue("latitude", lat)
+                      form.setValue("longitude", lng)
+                      toast({
+                        title: "Location selected",
+                        description: "The coordinates have been updated.",
+                      })
+                    }}
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
