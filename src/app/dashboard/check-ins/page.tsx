@@ -4,10 +4,10 @@ import { useState, useEffect } from "react"
 import { api } from "@/src/lib/api"
 import { Button } from "@/src/components/ui/button"
 import { Card, CardContent } from "@/src/components/ui/card"
-import { useToast } from "@/src/components/ui/use-toast"
 import { Loader2, CheckCircle, Calendar } from "lucide-react"
 import { useAuth } from "@/src/hooks/use-auth"
 import Link from "next/link"
+import { toast } from "sonner"
 
 interface CheckIn {
   id: string
@@ -25,7 +25,6 @@ export default function CheckInsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [isValidating, setIsValidating] = useState<Record<string, boolean>>({})
-  const { toast } = useToast()
   const { user } = useAuth()
 
   useEffect(() => {
@@ -59,10 +58,8 @@ export default function CheckInsPage() {
       setCheckIns(checkInsWithGyms)
     } catch (error) {
       console.error("Failed to fetch check-ins:", error)
-      toast({
-        title: "Erro",
-        description: "Falha ao buscar histórico de check-ins.",
-        variant: "destructive",
+      toast.error("Erro ao carregar check-ins", {
+        description: "Tente novamente mais tarde"
       })
     } finally {
       setIsLoading(false)
@@ -81,16 +78,10 @@ export default function CheckInsPage() {
         ),
       )
 
-      toast({
-        title: "Check-in validado",
-        description: "O check-in foi validado com sucesso.",
-      })
+      toast.success("Check-in validado com sucesso!")
     } catch (error) {
-      console.error("Failed to validate check-in:", error)
-      toast({
-        title: "Falha na validação",
+      toast.error("Falha na validação", {
         description: "Falha ao validar o check-in. Pode ser tarde demais para validar.",
-        variant: "destructive",
       })
     } finally {
       setIsValidating((prev) => ({ ...prev, [checkInId]: false }))

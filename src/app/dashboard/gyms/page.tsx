@@ -7,10 +7,10 @@ import { Button } from "@/src/components/ui/button"
 import { Input } from "@/src/components/ui/input"
 import { Card, CardContent, CardFooter } from "@/src/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs"
-import { useToast } from "@/src/components/ui/use-toast"
 import { Loader2, Search, MapPin, Dumbbell } from "lucide-react"
 import { useAuth } from "@/src/hooks/use-auth"
 import Map from "@/src/components/map"
+import { toast } from "sonner"
 
 interface Gym {
   id: string
@@ -31,12 +31,11 @@ export default function GymsPage() {
     latitude: number
     longitude: number
   } | null>(null)
-  const { toast } = useToast()
   const router = useRouter()
   const { user } = useAuth()
 
   useEffect(() => {
-    // Get user's location for nearby gyms
+    // Obter localização do usuário para academias próximas
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -47,16 +46,14 @@ export default function GymsPage() {
           fetchNearbyGyms(position.coords.latitude, position.coords.longitude)
         },
         (error) => {
-          console.error("Error getting location:", error)
-          toast({
-            title: "Location access denied",
-            description: "Please enable location services to find nearby gyms.",
-            variant: "destructive",
+          console.error("Erro ao obter localização:", error)
+          toast.error("Acesso à localização negado", {
+            description: "Por favor, habilite os serviços de localização para encontrar academias próximas.",
           })
         },
       )
     }
-  }, [toast])
+  }, [])
 
   const fetchNearbyGyms = async (latitude: number, longitude: number) => {
     setIsLoadingNearby(true)
@@ -66,11 +63,9 @@ export default function GymsPage() {
       })
       setNearbyGyms(response.data.gyms)
     } catch (error) {
-      console.error("Failed to fetch nearby gyms:", error)
-      toast({
-        title: "Error",
-        description: "Failed to fetch nearby gyms.",
-        variant: "destructive",
+      console.error("Falha ao buscar academias próximas:", error)
+      toast.error("Falha ao buscar academias próximas.", {
+        description: "Tente novamente mais tarde",
       })
     } finally {
       setIsLoadingNearby(false)
@@ -87,11 +82,9 @@ export default function GymsPage() {
       })
       setGyms(response.data.gyms)
     } catch (error) {
-      console.error("Failed to search gyms:", error)
-      toast({
-        title: "Error",
-        description: "Failed to search gyms.",
-        variant: "destructive",
+      console.error("Falha ao buscar academias:", error)
+      toast.error("Falha ao buscar academias.", {
+        description: "Tente novamente mais tarde",
       })
     } finally {
       setIsLoading(false)

@@ -9,13 +9,13 @@ import { Button } from "@/src/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import { Input } from "@/src/components/ui/input"
 import { Textarea } from "@/src/components/ui/textarea"
-import { useToast } from "@/src/components/ui/use-toast"
 import { api } from "@/src/lib/api"
 import { useAuth } from "@/src/hooks/use-auth"
 import { ArrowLeft, MapPin } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card"
 import Map from "@/src/components/map"
 import { NearbyGyms } from "@/src/components/nearby-gyms"
+import { toast } from "sonner"
 
 const createGymSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -46,7 +46,6 @@ export default function CreateGymPage() {
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
   const [showNearbyGyms, setShowNearbyGyms] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
   const { user } = useAuth()
 
   const form = useForm<CreateGymFormValues>({
@@ -117,24 +116,15 @@ export default function CreateGymPage() {
               // Update map center
               setMapCenter({ lat, lng })
               
-              toast({
-                title: "Location updated",
-                description: "Map has been centered on the address.",
-              })
+              toast.success("Localização atualizada")
             } else {
-              toast({
-                title: "Error finding location",
-                description: "Could not find coordinates for this address.",
-                variant: "destructive",
-              })
+              toast.error("Erro ao encontrar localização")
             }
           })
         }
       } catch {
-        toast({
-          title: "Error fetching ZIP code",
-          description: "Could not find the address for this ZIP code",
-          variant: "destructive",
+        toast.error("Erro ao buscar CEP", {
+          description: "CEP não encontrado ou inválido"
         })
       } finally {
         setIsLoadingCep(false)
@@ -142,7 +132,7 @@ export default function CreateGymPage() {
     }
 
     fetchAddress()
-  }, [zipcode, form, toast])
+  }, [zipcode, form])
 
   // Function to geocode address to coordinates
   const geocodeAddress = async (address: {
@@ -171,24 +161,15 @@ export default function CreateGymPage() {
           // Update map center
           setMapCenter({ lat, lng })
           
-          toast({
-            title: "Location updated",
-            description: "Map coordinates have been updated based on the address.",
-          })
+          toast.success("Localização atualizada")
         } else {
-          toast({
-            title: "Location not found",
-            description: "Could not find coordinates for this address.",
-            variant: "destructive",
-          })
+          toast.error("Localização não encontrada")
         }
       })
     } catch (error) {
       console.error("Error geocoding address:", error)
-      toast({
-        title: "Error updating location",
-        description: "Failed to get coordinates for this address.",
-        variant: "destructive",
+      toast.error("Erro ao atualizar localização", {
+        description: "Falha ao obter coordenadas para este endereço."
       })
     } finally {
       setIsGeocoding(false)
@@ -222,25 +203,18 @@ export default function CreateGymPage() {
           form.setValue("latitude", lat)
           form.setValue("longitude", lng)
           setMapCenter({ lat, lng })
-          toast({
-            title: "Location updated",
-            description: "Current location has been set.",
-          })
+          toast.success("Localização atualizada")
         },
         (error) => {
           console.error("Error getting location:", error)
-          toast({
-            title: "Location access denied",
-            description: "Please enable location services or enter coordinates manually.",
-            variant: "destructive",
+          toast.error("Acesso à localização negado", {
+            description: "Por favor, habilite os serviços de localização ou insira coordenadas manualmente."
           })
         },
       )
     } else {
-      toast({
-        title: "Geolocation not supported",
-        description: "Your browser doesn't support geolocation.",
-        variant: "destructive",
+      toast.error("Geolocalização não suportada", {
+        description: "Seu navegador não suporta geolocalização."
       })
     }
   }
@@ -292,24 +266,17 @@ export default function CreateGymPage() {
           form.setValue("address.state", state)
           form.setValue("address.zipcode", zipcode)
 
-          toast({
-            title: "Address updated",
-            description: "Address fields have been updated based on the selected location.",
-          })
+          toast.success("Endereço atualizado")
         } else {
-          toast({
-            title: "Error finding address",
-            description: "Could not find address for the selected location.",
-            variant: "destructive",
+          toast.error("Erro ao encontrar endereço", {
+            description: "Endereço não encontrado para a localização selecionada."
           })
         }
       })
     } catch (error) {
       console.error("Error getting address:", error)
-      toast({
-        title: "Error updating address",
-        description: "Failed to get address for the selected location.",
-        variant: "destructive",
+      toast.error("Erro ao atualizar endereço", {
+        description: "Falha ao obter endereço para a localização selecionada."
       })
     }
   }
@@ -329,19 +296,14 @@ export default function CreateGymPage() {
         phone: data.phone || null,
       })
 
-      toast({
-        title: "Gym created successfully!",
-        description: "The new gym has been added to the system.",
-      })
+      toast.success("Academia criada com sucesso!")
 
       // Show nearby gyms instead of redirecting
       setShowNearbyGyms(true)
     } catch (error: any) {
       console.error("Failed to create gym:", error)
-      toast({
-        title: "Failed to create gym",
-        description: error.response?.data?.message || "Something went wrong",
-        variant: "destructive",
+      toast.error("Erro ao criar academia", {
+        description: error.response?.data?.message || "Tente novamente mais tarde"
       })
     } finally {
       setIsLoading(false)
@@ -555,10 +517,7 @@ export default function CreateGymPage() {
                         form.setValue("longitude", lng)
                         setMapCenter({ lat, lng })
                         getAddressFromCoordinates(lat, lng)
-                        toast({
-                          title: "Location selected",
-                          description: "The coordinates have been updated.",
-                        })
+                        toast.success("Coordenadas atualizadas")
                       }}
                     />
                   </div>

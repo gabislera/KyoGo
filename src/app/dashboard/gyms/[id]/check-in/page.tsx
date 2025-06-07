@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import { api } from "@/src/lib/api"
 import { Button } from "@/src/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card"
-import { useToast } from "@/src/components/ui/use-toast"
+import { toast } from "sonner"
 import { Loader2, MapPin, ArrowLeft, CheckCircle } from "lucide-react"
 import Map from "@/src/components/map"
 
@@ -26,7 +26,6 @@ export default function CheckInPage() {
     latitude: number
     longitude: number
   } | null>(null)
-  const { toast } = useToast()
   const router = useRouter()
   const params = useParams()
   const gymId = params.id as string
@@ -44,26 +43,23 @@ export default function CheckInPage() {
         if (foundGym) {
           setGym(foundGym)
         } else {
-          toast({
-            title: "Gym not found",
-            description: "The gym you're looking for doesn't exist.",
-            variant: "destructive",
+          toast.error("Academia não encontrada", {
+            description: "A academia que você está procurando não existe.",
           })
           router.push("/dashboard/gyms")
         }
       } catch (error) {
-        console.error("Failed to fetch gym:", error)
-        toast({
-          title: "Error",
-          description: "Failed to fetch gym details.",
-          variant: "destructive",
+        console.error("Falha ao buscar academia:", error)
+        toast.error("Erro", {
+          description: "Falha ao obter detalhes da academia.",
         })
       } finally {
         setIsLoading(false)
       }
     }
 
-    // Get user's location for check-in
+        // Get user's location for check-in
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -73,25 +69,21 @@ export default function CheckInPage() {
           })
         },
         (error) => {
-          console.error("Error getting location:", error)
-          toast({
-            title: "Location access denied",
-            description: "Please enable location services to check in.",
-            variant: "destructive",
+          console.error("Erro ao obter localização:", error)
+          toast.error("Acesso à localização negado", {
+            description: "Por favor, habilite os serviços de localização para fazer check-in.",
           })
         },
       )
     }
 
     fetchGym()
-  }, [gymId, router, toast])
+  }, [gymId, router])
 
   const handleCheckIn = async () => {
     if (!userLocation) {
-      toast({
-        title: "Location required",
-        description: "Please enable location services to check in.",
-        variant: "destructive",
+      toast.error("Localização necessária", {
+        description: "Por favor, habilite os serviços de localização para fazer check-in.",
       })
       return
     }
@@ -103,29 +95,24 @@ export default function CheckInPage() {
         longitude: userLocation.longitude,
       })
 
-      toast({
-        title: "Check-in successful!",
-        description: "Your check-in has been recorded.",
-      })
+      toast.success("Check-in realizado com sucesso!")
 
       router.push("/dashboard/check-ins")
     } catch (error: any) {
-      console.error("Check-in failed:", error)
+      console.error("Falha no check-in:", error)
 
-      let errorMessage = "Failed to check in. Please try again."
+      let errorMessage = "Falha ao fazer check-in. Por favor, tente novamente."
 
       if (error.response?.data?.message) {
         if (error.response.data.message.includes("distance")) {
-          errorMessage = "You're too far from this gym to check in."
+          errorMessage = "Você está muito longe desta academia para fazer check-in."
         } else if (error.response.data.message.includes("check-in")) {
-          errorMessage = "You've already checked in today."
+          errorMessage = "Você já fez check-in hoje."
         }
       }
 
-      toast({
-        title: "Check-in failed",
+      toast.error("Falha no check-in", {
         description: errorMessage,
-        variant: "destructive",
       })
     } finally {
       setIsCheckingIn(false)
@@ -143,10 +130,10 @@ export default function CheckInPage() {
   if (!gym) {
     return (
       <div className="text-center py-10">
-        <h3 className="text-lg font-medium">Gym not found</h3>
+        <h3 className="text-lg font-medium">Academia não encontrada</h3>
         <Button variant="outline" className="mt-4" onClick={() => router.push("/dashboard/gyms")}>
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Gyms
+          Voltar para Academias
         </Button>
       </div>
     )
@@ -156,12 +143,12 @@ export default function CheckInPage() {
     <div className="max-w-md mx-auto">
       <Button variant="ghost" className="mb-6" onClick={() => router.push("/dashboard/gyms")}>
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Gyms
+        Voltar para Academias
       </Button>
 
       <Card>
         <CardHeader>
-          <CardTitle>Check In</CardTitle>
+          <CardTitle>Check-in</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
@@ -174,18 +161,18 @@ export default function CheckInPage() {
 
           <div className="border-t border-border pt-4">
             <p className="text-sm text-muted-foreground mb-4">
-              To check in, you must be physically present at the gym. Your location will be verified.
+              Para fazer check-in, você deve estar fisicamente presente na academia. Sua localização será verificada.
             </p>
 
             {userLocation ? (
               <div className="text-sm text-muted-foreground mb-4">
-                <p>Your current location:</p>
+                <p>Sua localização atual:</p>
                 <div className="mt-2 rounded-lg overflow-hidden">
                   <Map latitude={userLocation.latitude} longitude={userLocation.longitude} height="200px" />
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-rose-500 mb-4">Location access is required for check-in</p>
+              <p className="text-sm text-rose-500 mb-4">Acesso à localização é necessário para check-in</p>
             )}
 
             <Button onClick={handleCheckIn} disabled={isCheckingIn || !userLocation} className="w-full">
@@ -194,7 +181,7 @@ export default function CheckInPage() {
               ) : (
                 <CheckCircle className="h-4 w-4 mr-2" />
               )}
-              Check In Now
+              Fazer Check-in Agora
             </Button>
           </div>
         </CardContent>

@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/src/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import { Input } from "@/src/components/ui/input"
-import { useToast } from "@/src/components/ui/use-toast"
+import { toast } from "sonner"
 import { api } from "@/src/lib/api"
 import { JapaneseYen } from "lucide-react"
 
@@ -24,7 +24,6 @@ type RegisterFormValues = z.infer<typeof registerSchema>
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -39,16 +38,13 @@ export default function RegisterPage() {
     setIsLoading(true)
     try {
       await api.post("/users", data)
-      toast({
-        title: "Conta criada com sucesso!",
-        description: "Agora você pode fazer login com suas credenciais.",
+      toast.success("Conta criada com sucesso!", {
+        description: "Você já pode fazer login."
       })
       router.push("/login")
     } catch (error: any) {
-      toast({
-        title: "Falha no registro",
-        description: error.response?.data?.message || "Algo deu errado",
-        variant: "destructive",
+      toast.error("Falha no cadastro", {
+        description: error.response?.data?.message || "Erro ao criar conta"
       })
     } finally {
       setIsLoading(false)

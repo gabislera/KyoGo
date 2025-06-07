@@ -9,9 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/src/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import { Input } from "@/src/components/ui/input"
-import { useToast } from "@/src/components/ui/use-toast"
 import { useAuth } from "@/src/hooks/use-auth"
 import { JapaneseYen } from "lucide-react"
+import { toast } from "sonner"
 
 const loginSchema = z.object({
   email: z.string().email("Por favor, insira um email válido"),
@@ -23,7 +23,6 @@ type LoginFormValues = z.infer<typeof loginSchema>
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
   const { login } = useAuth()
 
   const form = useForm<LoginFormValues>({
@@ -38,16 +37,13 @@ export default function LoginPage() {
     setIsLoading(true)
     try {
       await login(data.email, data.password)
-      toast({
-        title: "Login realizado com sucesso!",
-        description: "Bem-vindo de volta.",
+      toast.success("Login realizado com sucesso!", {
+        description: "Bem-vindo de volta."
       })
       router.push("/dashboard")
     } catch (error: any) {
-      toast({
-        title: "Falha no login",
-        description: error.response?.data?.message || "Credenciais inválidas",
-        variant: "destructive",
+      toast.error("Falha no login", {
+        description: error.response?.data?.message || "Credenciais inválidas"
       })
     } finally {
       setIsLoading(false)
